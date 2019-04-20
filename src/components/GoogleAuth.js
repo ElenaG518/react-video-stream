@@ -1,8 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { signIn, signOut } from '../actions';
 
 class GoogleAuth extends React.Component {
-    state = { isSignedIn: null};
-
     componentDidMount() {
         // When we called Load up here load only allows us to get a signal or a notification of when the loading
         // process is complete by passing in a callback function.
@@ -15,7 +15,7 @@ class GoogleAuth extends React.Component {
             }).then(() => {
                 //we reference the auth instance object
                  this.auth = window.gapi.auth2.getAuthInstance();
-                 this.setState({isSignedIn: this.auth.isSignedIn.get()});
+                 this.onAuthChange(this.auth.isSignedIn.get());
                 //  listen in a method that we can pass a callback function to, and the callback function will be invoked
                 // anytime the user's status isSignedIn changes
                  this.auth.isSignedIn.listen(this.onAuthChange);
@@ -26,9 +26,15 @@ class GoogleAuth extends React.Component {
     // because this is a callback function I'm going to set it up as an arrow functions that 
     // its context is bound to my component.  One of the ways to bind this to a callback function
     // is to use the arrow function syntax
-    onAuthChange = () => {
-        this.setState({isSignedIn: this.auth.isSignedIn.get()})
-    }
+
+    // onAuthChange gets passed a boolean value from this.auth.isSignedIn.listen
+    onAuthChange = isSignedIn => {
+        if (isSignedIn) {
+            return this.props.signIn();
+        } else {
+            return this.props.signOut()
+        }
+    };
 
     onSignInClick = () => {
         this.auth.signIn();
@@ -39,9 +45,9 @@ class GoogleAuth extends React.Component {
     // };
 
     renderAuthButton() {
-        if(this.state.isSignedIn === null ) {
-            return <div>I don't know if we are signed in</div>;
-        } else if (this.state.isSignedIn) {
+        if(this.props.isSignedIn === null ) {
+            return null;
+        } else if (this.props.isSignedIn) {
             return (
                 <button 
                     className="ui red google button"
@@ -77,4 +83,8 @@ class GoogleAuth extends React.Component {
     };
 }
 
-export default GoogleAuth;
+const mapStateToProps = state => {
+    return { isSignedIn: state.auth.isSignedIn };
+};
+
+export default connect(mapStateToProps, { signIn, signOut })(GoogleAuth);
