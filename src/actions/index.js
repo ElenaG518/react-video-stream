@@ -6,9 +6,10 @@ import {  SIGN_OUT } from './types';
 
 
 export const SIGN_IN = 'SIGN_IN';
-export const signIn = () => {
+export const signIn = userId => {
     return {
-        type: SIGN_IN
+        type: SIGN_IN,
+        userId
     };
 };
 
