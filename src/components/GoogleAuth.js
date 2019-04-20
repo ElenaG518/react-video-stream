@@ -41,9 +41,9 @@ class GoogleAuth extends React.Component {
         this.auth.signIn();
     };
 
-    // onSignOutClick = () => {
-    //     this.auth.signOut();
-    // };
+    onSignOutClick = () => {
+        this.auth.signOut();
+    };
 
     renderAuthButton() {
         if(this.props.isSignedIn === null ) {
@@ -60,7 +60,7 @@ class GoogleAuth extends React.Component {
                     // function.  only necessary when binding this in a callback function and
                     // sending an argument 
                     // With JSX you pass a function as the event handler
-                    onClick = { this.auth.signOut}
+                    onClick = { this.onSignOutClick}
                 >
                 <i className="google icon" />Sign Out</button>
                 )
