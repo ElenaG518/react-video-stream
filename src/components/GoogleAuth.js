@@ -30,11 +30,11 @@ class GoogleAuth extends React.Component {
         this.setState({isSignedIn: this.auth.isSignedIn.get()})
     }
 
-    onSignIn = () => {
+    onSignInClick = () => {
         this.auth.signIn();
     };
 
-    // onSignOut = () => {
+    // onSignOutClick = () => {
     //     this.auth.signOut();
     // };
 
@@ -65,7 +65,7 @@ class GoogleAuth extends React.Component {
                     // in turn will call SignIn.  Notice no parentheses inside the curly braces. if 
                     // parentheses were added, onSignIn callback function would be ivoked as soon as the 
                     // component renders
-                    onClick = {this.onSignIn}
+                    onClick = {this.onSignInClick}
                 >
                 <i className="google icon" />Sign in with Google</button>
                 )
