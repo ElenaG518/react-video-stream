@@ -1,5 +1,5 @@
-import {  SIGN_OUT } from '../actions/types';
-import { SIGN_IN } from '../actions';
+import {  SIGN_OUT, SIGN_IN } from '../actions/types';
+// import {SIGN_IN} from '../actions';
 // all capitalized to indicate it is a true constant oject that should never change any of the values inside it
 const INITIAL_STATE = {
     isSignedIn: null,
