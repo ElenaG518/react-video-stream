@@ -38,8 +38,6 @@ export const createStream = formValues => async (dispatch, getState) => {
     // get the user back to the root route after our call is successful 
     // or we have received an error
     createBrowserHistory.push('/');
-
-
 };
 
 export const fetchStreams = () => async dispatch => {
@@ -58,6 +56,7 @@ export const editStream = (id, formValues) => async dispatch => {
     const response = await streams.put(`/streams/${id}`, formValues);
     
     dispatch({type: EDIT_STREAM, payload: response.data});
+    createBrowserHistory.push('/');
 }
 
 export const deleteStream = id => async dispatch => {
