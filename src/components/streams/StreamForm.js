@@ -33,7 +33,6 @@ class StreamForm extends React.Component {
     }
 
     mySubmitFunction = formValues => {
-        console.log(formValues);
         this.props.onSubmit(formValues);
         
     }
