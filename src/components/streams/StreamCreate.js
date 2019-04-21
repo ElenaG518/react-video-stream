@@ -3,6 +3,9 @@ import React from 'react';
 // reduxForm has similar functionality as the connect function in that it makes sure we can call
 // an action creator, and get some form data into our component
 import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+import { createStream } from '../../actions';
+
 
 class StreamCreate extends React.Component {
     renderError({ error, touched }) {
@@ -20,7 +23,6 @@ class StreamCreate extends React.Component {
     renderInput = ({ input, label, meta }) => {
         const className = `field ${meta.error && meta.touched ? "error" : ""}`;
         // meta comes form validate function below
-        console.log(meta);
         // send all the properties from formProps.input to the <input /> element
         return (
             <div className={className}>
@@ -34,6 +36,7 @@ class StreamCreate extends React.Component {
 
     mySubmitFunction(formValues){
         console.log(formValues);
+        this.props.createStream(formValues);
         
     }
 
@@ -71,7 +74,9 @@ const validate = formValues => {
 
 // as opposed to connect, which accepts multiple arguments, 
 // reduxForm receives a single object and we put several configuration into that object
-export default reduxForm({
+const formWrapped = reduxForm({
     form: 'streamCreate',
     validate
 })(StreamCreate);
+
+export default connect(null, { createStream })(formWrapped); 
