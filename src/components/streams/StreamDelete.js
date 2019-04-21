@@ -1,8 +1,9 @@
 // import _ from 'lodash';
 import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom'
 import Modal from '../Modal';
 import createBrowserHistory from '../../history';
-import { connect } from 'react-redux';
 import { fetchStream, deleteStream } from '../../actions';
 
 class StreamDelete extends React.Component {
@@ -15,8 +16,13 @@ class StreamDelete extends React.Component {
     renderActions() {
         return (
             <React.Fragment>
-                <button className="ui button negative">Submit</button>
-                <button className="ui button">Cancel</button>
+                <button 
+                    className="ui button negative"
+                    onClick={() => this.props.deleteStream(this.props.match.param.id)}
+                >
+                    Submit
+                </button>
+                <Link to="/" className="ui button"> Cancel</Link>
             </React.Fragment>
         );
     }
