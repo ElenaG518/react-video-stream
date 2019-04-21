@@ -1,7 +1,9 @@
+import _ from 'lodash';
 import React from 'react';
 // connect is from react-redux
 import { connect } from 'react-redux';
-import { fetchStream } from '../../actions';
+import { fetchStream, editStream } from '../../actions';
+import StreamForm from './StreamForm';
 
 // props are being sent by 'react-router-dom' in App file
 class StreamEdit extends React.Component {
@@ -9,15 +11,25 @@ class StreamEdit extends React.Component {
         this.props.fetchStream(this.props.match.params.id);
     };
 
+    mySubmitFunction = formValues => {
+        console.log(formValues);
+        this.props.editStream(this.props.match.params.id, formValues);
+    }
+
     render() {
         console.log(this.props);
         if (!this.props.stream) {
             return <div>Loading...</div>
         }
         return (
-            <div className="item">
-                {this.props.stream.title}
+            <div>
+                <h3>Edit Stream</h3>
+                <StreamForm 
+                    onSubmit = {this.mySubmitFunction}
+                    initialValues={_.pick(this.props.stream, "title", "description")}
+                />
             </div>
+            
         );
     }
 
@@ -31,4 +43,4 @@ const mapStateToProps = (state, ownProps) => {
     return {stream: state.streams[ownProps.match.params.id] }
 }
 
-export default connect(mapStateToProps, {fetchStream})(StreamEdit);
+export default connect(mapStateToProps, {fetchStream, editStream})(StreamEdit);
